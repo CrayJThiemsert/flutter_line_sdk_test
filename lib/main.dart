@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
+import 'package:flutter_line_sdk_test/line/utils_line.dart';
+
+import 'widget/dialog_widget.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  LineSDK.instance.setup("1654258100").then((_) {
+  // CrayChannel ID: 1654258100
+  // SDKTestChannel ID: 1654395218
+  LineSDK.instance.setup("1654395218").then((_) {
     print("LineSDK Prepared");
   });
   runApp(MyApp());
@@ -68,6 +74,23 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+//  void _signIn() async {
+//    try {
+//      final result = await LineSDK.instance.login(
+//          scopes: ["profile", "openid", "email"]
+//      );
+//      // user id -> result.userProfile.userId
+//      // user name -> result.userProfile.displayName
+//      // user avatar -> result.userProfile.pictureUrl
+//    } on PlatformException catch (e) {
+//      DialogUtils().showMessageDialog(context,
+//          'Sign in was failed',
+//          e.toString(),
+//          'Close'
+//          );
+//    }
+//  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -102,6 +125,21 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            RaisedButton(
+              onPressed: () {
+                debugPrint('Hello LINE');
+                LineUtils().signIn(context);
+              },
+              color: Colors.green,
+              child: Text(
+                'Log In',
+
+                style: TextStyle(
+                  fontSize: 18
+
+                ),
+              ),
+            ),
             Text(
               'You have pushed the button this many times:',
             ),
